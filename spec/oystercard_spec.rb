@@ -10,8 +10,12 @@ describe Oystercard do
 
   context '#top_up' do
     it 'oystercard responds to method top_up' do
-      expect(card).to respond_to :top_up
+      expect(card).to respond_to(:top_up).with(1).argument
     end
   end
 
+    it 'can top up the balance' do
+      expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
+    end
+  
 end
