@@ -22,4 +22,18 @@ describe Oystercard do
       expect{ card.top_up(95) }.to raise_error 'Over limit #{LIMIT_VALUE}'
     end
 
+
+
+context '#deduct' do
+  it 'oystercard responds to method deduct' do
+    expect(card).to respond_to(:deduct).with(1).argument
+  end
+
+  it 'can top up the balance' do
+    subject.top_up(20)
+    expect{ subject.deduct(1) }.to change{ subject.balance }.by (-1)
+    # what about if it goes under 0
+  end
 end
+
+  end
