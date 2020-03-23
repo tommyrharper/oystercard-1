@@ -17,5 +17,9 @@ describe Oystercard do
     it 'can top up the balance' do
       expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
     end
-  
+
+    it '#top_up fails if over balance' do
+      expect{ card.top_up(95) }.to raise_error 'Over limit #{LIMIT_VALUE}'
+    end
+
 end
