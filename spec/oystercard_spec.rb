@@ -1,6 +1,5 @@
 require './lib/oystercard'
 
-
 describe Oystercard do
   subject(:card) {Oystercard.new}
 
@@ -12,28 +11,69 @@ describe Oystercard do
     it 'oystercard responds to method top_up' do
       expect(card).to respond_to(:top_up).with(1).argument
     end
-  end
-
+  
     it 'can top up the balance' do
       expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
     end
 
     it '#top_up fails if over balance' do
-      expect{ card.top_up(95) }.to raise_error 'Over limit #{LIMIT_VALUE}'
+      expect{ card.top_up(95) }.to raise_error "Over limit"
+    end
+  end  
+
+=begin
+  context '#deduct' do
+    it 'oystercard responds to method deduct' do
+      expect(card).to respond_to(:deduct).with(1).argument
     end
 
+    it 'can top up the balance' do
+      subject.top_up(20)
+      expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
+       what about if it goes under 0
+    end
+  end
+=end
 
 
-context '#deduct' do
-  it 'oystercard responds to method deduct' do
-    expect(card).to respond_to(:deduct).with(1).argument
+context '#touch_in' do 
+    it 'start journey' do
+    expect(card).to respond_to(:touch_in)
+    #expect(card).to be_journey_in("yes")
+    card.top_up(1)
+    expect(card.journey_in?("yes")).to eql true
   end
 
-  it 'can top up the balance' do
-    subject.top_up(20)
-    expect{ subject.deduct(1) }.to change{ subject.balance }.by (-1)
-    # what about if it goes under 0
-  end
+  it 'will not allow card to touch in  and will throw an error  if have less than one pound in balance' do
+    expect {card.touch_in}.to raise_error "insufficient balance"
+  end 
 end
 
-  end
+=begin
+it "raises an error if it exceeds maximum capacity (default 20)" do
+  20.times { docking_station.dock_bikes(Bike.new) }
+  expect { docking_station.dock_bikes(daisy) }.to raise_error "Dock at maximum capacity"
+end
+end
+=end
+
+
+
+
+  context '#touch_out' do 
+    it 'ends journey' do
+    expect(card).to respond_to(:touch_out)
+    expect(card).to_not be_journey_in("no")
+    end 
+
+    it 'deduct money from balance' do
+      expect{card.touch_out}.to change{ subject.balance }.by (-1)
+    end 
+
+    #expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
+      # what about if it goes under 0
+  end 
+end
+
+#Write a test that checks that an error is thrown if 
+#a card with insufficient balance is touched in
