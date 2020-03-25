@@ -19,6 +19,11 @@ describe Oystercard do
     it '#top_up fails if over balance' do
       expect{ card.top_up(95) }.to raise_error "Over limit"
     end
+
+    it 'returns an empty list of journeys by default' do
+      expect(card.journeys).to eq []
+    end
+
   end  
 
 
@@ -40,6 +45,12 @@ context '#touch_in' do
     expect(card.entry_station).to eq "edgeware"
   end 
 
+  it 'touching in and out creates one journey' do
+    card.top_up(1)
+    card.touch_in("edgeware")
+    card.touch_out("waterloo")
+    expect(card.journeys).to eq [{:entry => "edgeware", :exit => "waterloo"}]
+  end
 end
 
 
@@ -52,13 +63,15 @@ end
     end 
 
     it 'deduct money from balance' do
-      expect{card.touch_out}.to change{ subject.balance }.by (-1)
+      card.top_up(10)
+      card.touch_in("edgeware")
+      expect{card.touch_out("waterloo")}.to change{ card.balance }.by (-1)
     end 
 
     it 'changes entry_station back to nil on touch_out' do
       card.top_up(10)
       card.touch_in('edgeware')
-      card.touch_out
+      card.touch_out("waterloo")
       expect(card.entry_station).to eq nil
     end 
   end 
