@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Oystercard
-  attr_reader :balance
+  attr_reader :balance, :journey
   CARD_LIMIT = 90
   MINIMUM_FUNDS = 1
   AMOUNT = 1
@@ -18,21 +18,12 @@ class Oystercard
 
   def touch_in
     raise "insufficient balance" if @balance < MINIMUM_FUNDS
-    journey_in?('yes')
-  end
-
-  def journey_in?(confirm)
-    if confirm == 'yes'
-      @journey = true
-    else 
-      @journey = false
-    end
+    @journey = true
   end
 
   def touch_out
-    journey_in?('no')
+    @journey = false
     deduct(AMOUNT)
-    # is assuming amount does not change
   end
 
  private

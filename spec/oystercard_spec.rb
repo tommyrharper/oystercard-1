@@ -39,9 +39,9 @@ describe Oystercard do
 context '#touch_in' do 
     it 'start journey' do
     expect(card).to respond_to(:touch_in)
-    #expect(card).to be_journey_in("yes")
     card.top_up(1)
-    expect(card.journey_in?("yes")).to eql true
+    card.touch_in
+    expect(card.journey).to eq true
   end
 
   it 'will not allow card to touch in  and will throw an error  if have less than one pound in balance' do
@@ -63,7 +63,7 @@ end
   context '#touch_out' do 
     it 'ends journey' do
     expect(card).to respond_to(:touch_out)
-    expect(card).to_not be_journey_in("no")
+    expect(card.journey).to eq false
     end 
 
     it 'deduct money from balance' do
