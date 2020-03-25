@@ -21,41 +21,26 @@ describe Oystercard do
     end
   end  
 
-=begin
-  context '#deduct' do
-    it 'oystercard responds to method deduct' do
-      expect(card).to respond_to(:deduct).with(1).argument
-    end
-
-    it 'can top up the balance' do
-      subject.top_up(20)
-      expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
-       what about if it goes under 0
-    end
-  end
-=end
 
 
 context '#touch_in' do 
     it 'start journey' do
-    expect(card).to respond_to(:touch_in)
+    expect(card).to respond_to(:touch_in).with(1).argument
     card.top_up(1)
-    card.touch_in
-    expect(card.journey).to eq true
+    card.touch_in("edgeware")
+    expect(card.in_journey?).to eq true
   end
 
   it 'will not allow card to touch in  and will throw an error  if have less than one pound in balance' do
-    expect {card.touch_in}.to raise_error "insufficient balance"
+    expect {card.touch_in('edgeware')}.to raise_error "insufficient balance"
   end 
-end
+  it 'will save the  station to the entry_station on touch_in' do
+    card.top_up(1)
+    card.touch_in("edgeware")
+    expect(card.entry_station).to eq "edgeware"
+  end 
 
-=begin
-it "raises an error if it exceeds maximum capacity (default 20)" do
-  20.times { docking_station.dock_bikes(Bike.new) }
-  expect { docking_station.dock_bikes(daisy) }.to raise_error "Dock at maximum capacity"
 end
-end
-=end
 
 
 
@@ -63,16 +48,26 @@ end
   context '#touch_out' do 
     it 'ends journey' do
     expect(card).to respond_to(:touch_out)
-    expect(card.journey).to eq false
+    expect(card.in_journey?).to eq false
     end 
 
     it 'deduct money from balance' do
       expect{card.touch_out}.to change{ subject.balance }.by (-1)
     end 
 
+    it 'changes entry_station back to nil on touch_out' do
+      card.top_up(10)
+      card.touch_in('edgeware')
+      card.touch_out
+      expect(card.entry_station).to eq nil
+    end 
+  end 
+
+
+
     #expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
       # what about if it goes under 0
-  end 
+  
 end
 
 #Write a test that checks that an error is thrown if 
