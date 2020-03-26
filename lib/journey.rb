@@ -1,18 +1,22 @@
 class Journey
 
-  attr_reader :entry_station, :exit_station
+  attr_accessor :entry_station, :exit_station
 
   def initialize
     @entry_station
     @exit_station
   end
 
-  def start(station)
-    @entry_station = station
+  def finish
+
   end
 
-  def end(station)
-    @exit_station = station 
+  def fare
+
+  end
+
+  def complete?
+
   end
 
 end

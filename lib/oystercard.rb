@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require_relative 'journey.rb'
 
 class Oystercard
   attr_reader :balance, :entry_station, :journeys
@@ -19,19 +19,27 @@ class Oystercard
 
   def touch_in(station)
     raise "insufficient balance" if @balance < MINIMUM_FUNDS
-    @entry_station = station
-    save_start_journey(station)
+    #@entry_station = station
+    #save_start_journey(station)
+    # new code starts here:
+    @journey = Journey.new
+    @journey.entry_station = station
   end
 
   def touch_out(station)
     deduct(AMOUNT)
-    @entry_station = nil
-    @journey[:exit] = station
+    #@entry_station = nil
+    #@journey[:exit] = station
+    # new code starts here:
+    @journey.exit_station = station
+    @journeys << @journey
+    @journey = nil
+    station
   end
 
-  def in_journey?
-    entry_station == nil ? false : true
-  end
+  #def in_journey?
+    #entry_station == nil ? false : true
+  #end
 
  private
 
@@ -39,11 +47,11 @@ class Oystercard
     @balance -= amount
   end
 
-  def save_start_journey(station)
-    @journey = Hash.new
-    @journey[:entry] = station
-    @journeys.push(@journey)
-  end
+  #def save_start_journey(station)
+  #  @journey = Hash.new
+  #  @journey[:entry] = station
+  #  @journeys.push(@journey)
+  #end
   
 end
 
