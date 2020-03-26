@@ -7,8 +7,9 @@ class Journey
     @exit_station
   end
 
-  def finish
-
+  def finish(station)
+    @exit_station = station
+    self
   end
 
   def fare
