@@ -66,6 +66,11 @@
 | travelling?    |                          |
 |                |                          |
 
+# Step 13
 
+Objects | Messages
+-----------|----------
+Oystercard | initialize(balance = 0) <br/> top_up(amount) <br/> touch_in(station) <br/> touch_out(station) <br/> in_journey? <br/> *deduct(amount)* <br/> *save_start_journey(station)*
+Station    | initialize(name, zone)
 
 
