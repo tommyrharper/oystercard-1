@@ -10,6 +10,7 @@ class Oystercard
     @balance = 0
     @entry_station
     @journeys = []
+    @journey = Journey.new
   end
 
   def top_up(amount)
@@ -22,8 +23,16 @@ class Oystercard
     #@entry_station = station
     #save_start_journey(station)
     # new code starts here:
-    @journey = Journey.new
-    @journey.entry_station = station
+
+    if @journey.entry_station != nil && @journey.exit_station == nil
+      @journey.finish("didn't touch out")
+      @journeys << @journey
+      @journey = Journey.new
+      @journey.entry_station = station
+    else
+      @journey = Journey.new
+      @journey.entry_station = station
+    end
   end
 
   def touch_out(station)
@@ -31,10 +40,13 @@ class Oystercard
     #@entry_station = nil
     #@journey[:exit] = station
     # new code starts here:
-    @journey.exit_station = station
+    #@journey.exit_station = station
+
+    @journey.finish(station)
     @journeys << @journey
     @journey = nil
     station
+
   end
 
   #def in_journey?

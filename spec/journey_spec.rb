@@ -21,7 +21,6 @@ describe Journey do
   end
 
   it '#finish completes the journey' do
-
     expect(subject.finish(station)).to eq subject
   end
 
@@ -29,18 +28,27 @@ describe Journey do
     expect(subject).to respond_to :fare
   end
 
+  it 'has a penalty fare by default' do
+    expect(subject.fare).to eq Journey::PENALTY_FARE
+  end
+
   it 'responds to the compelete method' do
     expect(subject).to respond_to :complete?
   end
 
-  context "user doesn't #touch_in" do
+  it "knows if a journey is not complete" do
+    expect(subject).not_to be_complete
+  end
 
-    it "it doesn't have an entry_station" do
-      journey = Journey.new
-      journey.exit_station = station
-      expect(journey.entry_station).to eq nil
-    end
+  it 'when journey is complete #complete' do
+    subject.finish(station)
+    expect(subject).to be_complete
+  end
 
+  it 'when journey is complete #complete' do
+  # when entry station  
+    subject.finish(station)
+    expect(subject).to be_complete
   end
 
 end
