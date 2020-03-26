@@ -26,8 +26,6 @@ describe Oystercard do
 
   end  
 
-
-
 context '#touch_in' do 
     it 'start journey' do
     expect(card).to respond_to(:touch_in).with(1).argument
