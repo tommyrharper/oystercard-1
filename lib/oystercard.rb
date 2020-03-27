@@ -25,7 +25,7 @@ class Oystercard
     # new code starts here:
 
     if @journey.entry_station != nil && @journey.exit_station == nil
-      @journey.finish("didn't touch out")
+      @journey.finish(nil)
       @journeys << @journey
       @journey = Journey.new
       @journey.entry_station = station
@@ -41,7 +41,8 @@ class Oystercard
     #@journey[:exit] = station
     # new code starts here:
     #@journey.exit_station = station
-
+    @journey = Journey.new if @journey.exit_station != nil
+    
     @journey.finish(station)
     @journeys << @journey
     #@journey = nil
