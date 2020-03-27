@@ -19,7 +19,7 @@ class Journey
   end
 
   def complete?
-    @exit_station != nil
+    ![@exit_station, @entry_station].include?(nil)
   end
 
 end
