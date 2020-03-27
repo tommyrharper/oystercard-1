@@ -44,7 +44,7 @@ class Oystercard
 
     @journey.finish(station)
     @journeys << @journey
-    @journey = nil
+    #@journey = nil
     station
 
   end

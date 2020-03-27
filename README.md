@@ -89,7 +89,7 @@ It should charge a penalty fee
 
 Objects | Messages
 -----------|----------
-Oystercard | attr_reader :balance, :journeys <br/> initialize(balance = 0) <br/> top_up(amount) <br/> touch_in(station) <br/> touch_out(station) <br/>  !! in_journey?  !! <br/> *deduct(amount)* <br/> *penalty*
+Oystercard | attr_reader :balance, :journeys <br/> initialize(balance = 0) <br/> top_up(amount) <br/> touch_in(station) <br/> touch_out(station) <br/>  !! in_journey? !! <br/> *deduct(amount)* <br/> !! *penalty* !!
 Station    | initialize(name, zone) <br/> attr_reader :zone :name
 Journey     | attr_reader :entry_station, :exit_station <br/> finish <br/> fare <br/> complete?
 
