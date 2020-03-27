@@ -51,4 +51,9 @@ describe Journey do
     expect(subject).to be_complete
   end
 
+  it 'journey incomplete if entry station is equal to nil' do
+    subject.exit_station = "bow"
+    expect(subject.complete?).to be false
+  end
+
 end

@@ -59,13 +59,16 @@ end
 
   context '#touch_out' do 
 
-    let(:journey) { double :journey, complete?: true }
+    context 'uses journey double' do
 
-    it 'ends journey' do
-      expect(card).to respond_to(:touch_out)
-      expect(journey.complete?).to be true
-    end 
+      let(:journey) { double :journey, complete?: true }
 
+      it 'ends journey' do
+        expect(card).to respond_to(:touch_out)
+        expect(journey.complete?).to be true
+      end 
+    end
+    
     it 'deduct money from balance' do
       card.top_up(10)
       card.touch_in("edgeware")
@@ -78,9 +81,19 @@ end
       card.touch_out("waterloo")
       expect(card.entry_station).to eq nil
     end 
-
   end 
 
+  #context '#touch_out without touching in' do
+
+
+
+   # it 'incomplete journey if touching out without touching in' do
+   #   card.top_up(10)
+   #   card.touch_out("waterloo")
+    #  expect(journey.entry_station).
+   # end
+
+  #end
 
 
     #expect { subject.deduct(1) }.to change{ subject.balance }.by (-1)
